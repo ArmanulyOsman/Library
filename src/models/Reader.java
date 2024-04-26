@@ -1,3 +1,5 @@
+package models;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
@@ -72,7 +74,7 @@ public class Reader {
 
     @Override
     public String toString() {
-        return "Reader{" +
+        return "entity.Reader{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

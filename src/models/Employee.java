@@ -1,18 +1,34 @@
+package models;
+
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Employee {
-    private Long id;
+    private int id;
     private String firstName;
     private String lastName;
     private String date;
     private List<Book> books;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName);
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -48,17 +64,22 @@ public class Employee {
         this.books = books;
     }
 
-    public Employee(Long id, String firstName, String lastName, String date) {
+    public Employee(int id, String firstName, String lastName, String date) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.date = date;
     }
 
+    public Employee(String firstName, String lastName, String date) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.date = date;
+    }
 
     @Override
     public String toString() {
-        return "Employee{" +
+        return "entity.Employee{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -77,7 +98,6 @@ public class Employee {
         System.out.println("Введите дату (ГГГГ-ММ-ДД):");
         String date = scanner.nextLine();
 
-        // Возвращаем новый экземпляр сотрудника
-        return new Employee(null, firstName, lastName, date);
+        return new Employee(firstName, lastName, date);
     }
 }

@@ -1,8 +1,10 @@
-import java.util.Arrays;
+package models;
+
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Book {
-    private Long id;
+    private int id;
     private String name;
     private int year;
     private String author;
@@ -11,11 +13,11 @@ public class Book {
     private Genre genre;
 
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -67,8 +69,30 @@ public class Book {
         this.genre = genre;
     }
 
-    public Book(Long id, String name, int year, String author, int pagesCount, boolean flag, Genre genre) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return year == book.year && Objects.equals(name, book.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, year);
+    }
+
+    public Book(int id, String name, int year, String author, int pagesCount, boolean flag, Genre genre) {
         this.id = id;
+        this.name = name;
+        this.year = year;
+        this.author = author;
+        this.pagesCount = pagesCount;
+        this.flag = flag;
+        this.genre = genre;
+    }
+
+    public Book(String name, int year, String author, int pagesCount, boolean flag, Genre genre) {
         this.name = name;
         this.year = year;
         this.author = author;
@@ -81,7 +105,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" +
+        return "entity.Book{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", year=" + year +
