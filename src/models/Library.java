@@ -1,9 +1,9 @@
 package models;
 
 import exceptions.BookIsTakenException;
-import exceptions.DublicateBookException;
 import exceptions.DublicateEmployeeException;
 import exceptions.DublicateReaderException;
+import exceptions.ModelNotFoundException;
 
 import java.util.List;
 import java.util.Scanner;
@@ -33,26 +33,25 @@ public class Library {
     }
 
     public void addBookToLibrary(Book book, int bookId) {
-        try {
-            for (Book book1 : books) {
-                if (book.equals(book1)) {
-                    throw new DublicateBookException("Book alreadey exist!");
-                }
-            }
-        } catch (DublicateBookException exception) {
-            System.out.println("Book alreadey exist!");
-            return;
-        }
         book.setId(bookId);
         books.add(book);
     }
 
     public void deleteBook(Book book) {
+        try {
+            if (!books.contains(book)){
+                throw new ModelNotFoundException("book not found");
+            }
+        }
+        catch (ModelNotFoundException ex){
+            System.out.println("Book not found");
+            return;
+        }
         books.remove(book);
     }
 
     public Book findBook(Scanner scanner) {
-        System.out.println("entity.Book name: ");
+        System.out.println("Book name: ");
         String name = scanner.next();
         for (Book book : books) {
             if (book.getName().equals(name)) {
@@ -63,10 +62,12 @@ public class Library {
     }
 
     public Reader findReader(Scanner scanner) {
-        System.out.println("entity.Reader first name: ");
+        System.out.println("Reader first name: ");
         String firstMame = scanner.next();
+        System.out.println("Reader second name: ");
+        String lastName = scanner.next();
         for (Reader reader : readers) {
-            if (reader.getFirstName().equals(firstMame)) {
+            if (reader.getFirstName().equals(firstMame) && reader.getLastName().equals(lastName)) {
                 return reader;
             }
         }
@@ -101,6 +102,15 @@ public class Library {
     }
 
     public void deleteReader(Reader reader) {
+        try {
+            if (!readers.contains(reader)){
+                throw new ModelNotFoundException("Reader not found");
+            }
+        }
+        catch (ModelNotFoundException ex){
+            System.out.println("Reader not found");
+            return;
+        }
         readers.remove(reader);
     }
 
@@ -120,6 +130,15 @@ public class Library {
     }
 
     public void deleteEmployee(Employee employee) {
+        try {
+            if (!employees.contains(employee)){
+                throw new ModelNotFoundException("Employee not found");
+            }
+        }
+        catch (ModelNotFoundException ex){
+            System.out.println("Employee not found");
+            return;
+        }
         employees.remove(employee);
     }
 
